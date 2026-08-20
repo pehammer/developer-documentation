@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Competitive Research: Developer Documentation &amp; DevRel Brand</title>
+<style>
+  :root{
+    --bg:#0b0d10;
+    --panel:#111418;
+    --panel-2:#161a1f;
+    --text:#eef1f4;
+    --muted:#9aa4af;
+    --border:#22262c;
+    --accent:#3b82f6;
+    --good:#34d399;
+    --bad:#f87171;
+    --radius:16px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.55;
+  }
+  a{color:inherit;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+
+  header.hero{
+    padding:96px 0 72px;
+    background:
+      radial-gradient(1200px 500px at 15% -10%, rgba(59,130,246,.35), transparent 60%),
+      radial-gradient(900px 500px at 90% 0%, rgba(168,85,247,.25), transparent 60%),
+      var(--bg);
+    border-bottom:1px solid var(--border);
+  }
+  .eyebrow{
+    display:inline-block;
+    font-size:13px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--muted);
+    border:1px solid var(--border);
+    padding:6px 12px;
+    border-radius:999px;
+    margin-bottom:20px;
+  }
+  h1{font-size:clamp(32px,5vw,52px);margin:0 0 18px;letter-spacing:-0.02em;}
+  .lede{font-size:19px;color:var(--muted);max-width:760px;margin:0 0 8px;}
+  .companion{font-size:14px;color:var(--muted);margin-top:24px;}
+  .companion a{text-decoration:underline;text-underline-offset:3px;}
+
+  nav.toc{
+    padding:28px 0;
+    border-bottom:1px solid var(--border);
+    background:var(--panel);
+    position:sticky;top:0;z-index:10;
+  }
+  nav.toc ul{
+    list-style:none;margin:0;padding:0;
+    display:flex;flex-wrap:wrap;gap:10px 18px;
+    font-size:14px;
+  }
+  nav.toc a{color:var(--muted);text-decoration:none;}
+  nav.toc a:hover{color:var(--text);}
+
+  section{padding:64px 0;border-bottom:1px solid var(--border);}
+  section.group-title{padding-bottom:8px;}
+  h2.section-heading{
+    font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);
+    margin:0 0 8px;
+  }
+  h2.group-heading{font-size:28px;margin:0 0 6px;letter-spacing:-0.01em;}
+  p.group-dek{color:var(--muted);font-size:15.5px;max-width:720px;margin:0;}
+
+  .cards{display:grid;grid-template-columns:1fr;gap:28px;margin-top:32px;}
+  .card{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    overflow:hidden;
+  }
+  .card-swatch{
+    height:140px;
+    display:flex;align-items:center;gap:16px;
+    padding:0 28px;
+  }
+  .card-swatch img{
+    width:56px;height:56px;
+    filter:drop-shadow(0 2px 6px rgba(0,0,0,.35));
+  }
+  .card-swatch .brandname{
+    font-size:24px;font-weight:600;color:#fff;letter-spacing:-0.01em;
+  }
+  .card-body{padding:24px 28px 28px;}
+  .card-body h3{margin:0 0 4px;font-size:20px;}
+  .tagline{color:var(--muted);font-size:14px;margin:0 0 18px;}
+  dl.facts{margin:0 0 18px;display:grid;grid-template-columns:120px 1fr;gap:10px 16px;font-size:14.5px;}
+  dl.facts dt{color:var(--muted);}
+  dl.facts dd{margin:0;}
+  .swatch-row{display:flex;gap:8px;margin:14px 0;flex-wrap:wrap;}
+  .swatch{
+    width:44px;height:44px;border-radius:10px;border:1px solid rgba(255,255,255,.12);
+    position:relative;
+  }
+  .swatch .hex{
+    position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);
+    font-size:10px;color:var(--muted);white-space:nowrap;
+  }
+  .takeaway{
+    background:var(--panel-2);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:16px 18px;
+    font-size:14.5px;
+    margin-top:26px;
+  }
+  .takeaway strong{color:#fff;}
+  .links{margin-top:18px;display:flex;gap:14px;flex-wrap:wrap;font-size:14px;}
+  .links a{
+    display:inline-flex;align-items:center;gap:6px;
+    border:1px solid var(--border);
+    padding:8px 14px;border-radius:999px;
+    text-decoration:none;color:var(--text);
+  }
+  .links a:hover{border-color:var(--accent);}
+  .links a::after{content:"↗";font-size:12px;color:var(--muted);}
+
+  ul.patterns{padding-left:20px;margin:24px 0 0;}
+  ul.patterns li{margin-bottom:14px;font-size:15.5px;}
+  ul.patterns li strong{color:#fff;}
+
+  .use-list{margin:20px 0 0;padding-left:20px;}
+  .use-list li{margin-bottom:8px;}
+
+  .craft-grid{display:grid;grid-template-columns:1fr;gap:20px;margin-top:28px;}
+  .craft-card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:22px 24px;}
+  .craft-card h3{margin:0 0 6px;font-size:17px;}
+  .craft-card p{color:var(--muted);font-size:14.5px;margin:0 0 14px;}
+  .code-pair{display:grid;grid-template-columns:1fr;gap:10px;}
+  .code-block{
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-size:12.5px;line-height:1.6;
+    background:#0b0d10;border-radius:8px;padding:12px 14px;
+    border-left:3px solid var(--border);
+    overflow-x:auto;white-space:pre;color:#c9d1d9;
+  }
+  .code-block.dont{border-left-color:var(--bad);}
+  .code-block.do{border-left-color:var(--good);}
+  .code-label{font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:4px;}
+  .code-label.dont{color:var(--bad);}
+  .code-label.do{color:var(--good);}
+
+  footer{padding:48px 0 80px;}
+  footer h2{font-size:20px;margin-bottom:16px;}
+  footer ul{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;font-size:14px;}
+  footer li{color:var(--muted);}
+  footer a{text-decoration:underline;text-underline-offset:2px;}
+  .back-to-top{display:inline-block;margin-top:40px;font-size:13px;color:var(--muted);text-decoration:none;}
+
+  @media (min-width:760px){
+    .cards{grid-template-columns:1fr 1fr;}
+    .code-pair{grid-template-columns:1fr 1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Competitive Research — v2</span>
+    <h1>Developer Documentation &amp; DevRel Brand</h1>
+    <p class="lede">Not general product marketing — specifically how platform giants and design-forward tool makers build a <em>documentation portal</em> that communicates to, teaches, and evangelizes the developer community: portal structure, tone of voice, code-sample UX, community/changelog signals, and documentation craft patterns.</p>
+    <p class="companion">Companion to an earlier <em>general developer brand</em> research pass (v1), focused on overall product design systems rather than the documentation portal experience.</p>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="wrap">
+    <ul>
+      <li><a href="#giants">Platform Giants</a></li>
+      <li><a href="#infra">API/Infra Darlings</a></li>
+      <li><a href="#tools">Dev Tools &amp; Frameworks</a></li>
+      <li><a href="#platforms">Platforms &amp; Ecosystems</a></li>
+      <li><a href="#craft">Documentation Craft Patterns</a></li>
+      <li><a href="#sources">Sources</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section id="giants">
+  <div class="wrap">
+    <h2 class="section-heading">01 — The Obvious References</h2>
+    <h2 class="group-heading">Platform Giants — Portal, Not Product Page</h2>
+    <p class="group-dek">Both Apple and Google run their developer portal as a wholly separate brand surface from their consumer marketing — a distinct nav, distinct tone, and a hub built around news, events, and community rather than selling a product.</p>
+
+    <div class="cards">
+
+      <article class="card" id="apple">
+        <div class="card-swatch" style="background:linear-gradient(135deg,#0b0b0d 0%,#2b2b30 45%,#4a3f8f 100%);">
+          <img src="https://cdn.simpleicons.org/apple/ffffff" alt="Apple logo" />
+          <span class="brandname">developer.apple.com</span>
+        </div>
+        <div class="card-body">
+          <h3>The event calendar IS the brand</h3>
+          <p class="tagline">"What's new for Apple developers" — portal identity is re-skinned every WWDC.</p>
+          <dl class="facts">
+            <dt>Structure</dt><dd>Hero = current WWDC/OS cycle news; below the fold, Discover/Design/Distribute/Support tracks</dd>
+            <dt>Visual theme</dt><dd>WWDC26's dark, glowing "All systems glow" treatment ties directly into the "Liquid Glass" system redesign — portal visuals mirror the OS visual language of the moment</dd>
+            <dt>Tone</dt><dd>Terse, confident, editorial — headlines read like product-announcement copy, not tutorials</dd>
+            <dt>Community</dt><dd>Feedback Assistant, Developer Forums, and in-person Labs are surfaced as account-menu-level features, not buried support links</dd>
+          </dl>
+          <div class="swatch-row">
+            <div class="swatch" style="background:#0b0b0d"><span class="hex">#0B0B0D</span></div>
+            <div class="swatch" style="background:#4a3f8f"><span class="hex">#4A3F8F</span></div>
+            <div class="swatch" style="background:#ff375f"><span class="hex">#FF375F</span></div>
+            <div class="swatch" style="background:#ffffff;border:1px solid #333"><span class="hex">#FFFFFF</span></div>
+          </div>
+          <div class="takeaway"><strong>Takeaway:</strong> Apple treats the dev portal hero as a live "state of the platform" banner tied to the current OS/event cycle, not a static evergreen hero — a strong model for any platform with a recurring flagship event or release cadence.</div>
+          <div class="links">
+            <a href="https://developer.apple.com/" target="_blank" rel="noopener">developer.apple.com</a>
+            <a href="https://developer.apple.com/wwdc26/" target="_blank" rel="noopener">WWDC26 portal theme</a>
+            <a href="https://developer.apple.com/design/" target="_blank" rel="noopener">Design resources</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" id="google">
+        <div class="card-swatch" style="background:linear-gradient(135deg,#4285F4 0%,#EA4335 33%,#FBBC05 66%,#34A853 100%);">
+          <img src="https://cdn.simpleicons.org/google/ffffff" alt="Google logo" />
+          <span class="brandname">developers.google.com</span>
+        </div>
+        <div class="card-body">
+          <h3>"Build with Gemini" — a living homepage</h3>
+          <p class="tagline">One portal, but the hero rotates around the current flagship product story.</p>
+          <dl class="facts">
+            <dt>Structure</dt><dd>Hero → interactive code-tab widget (Python/JS/Go/Java/REST, real runnable snippet) → News &amp; Announcements grid → Community &amp; Events grid → footer</dd>
+            <dt>Footer taxonomy</dt><dd>Explicitly split into <em>Engage</em> (Programs, Groups, Experts, Accelerators), <em>Connect</em> (social), and <em>Build</em> (product docs) — evangelism and reference are separated as first-class nav concepts</dd>
+            <dt>Code UX</dt><dd>Language-tab switcher lets a visitor see "this is for me" in one click before ever leaving the homepage</dd>
+            <dt>Social image</dt><dd>Uses a dedicated, purpose-built landing social card, not a generic logo</dd>
+          </dl>
+          <div class="swatch-row">
+            <div class="swatch" style="background:#4285F4"><span class="hex">#4285F4</span></div>
+            <div class="swatch" style="background:#EA4335"><span class="hex">#EA4335</span></div>
+            <div class="swatch" style="background:#FBBC05"><span class="hex">#FBBC05</span></div>
+            <div class="swatch" style="background:#34A853"><span class="hex">#34A853</span></div>
+          </div>
+          <div class="takeaway"><strong>Takeaway:</strong> The "Engage / Connect / Build" footer split is a clean model for any developer portal: separate community-and-events evangelism from pure reference docs, so both audiences (learners vs. builders) get a fast path.</div>
+          <div class="links">
+            <a href="https://developers.google.com/" target="_blank" rel="noopener">developers.google.com</a>
+            <a href="https://developers.googleblog.com/" target="_blank" rel="noopener">Google Developers Blog</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section id="infra">
+  <div class="wrap">
+    <h2 class="section-heading">02 — API/Infra Darlings</h2>
+    <h2 class="group-heading">"Docs as Marketing" Done Right</h2>
+    <p class="group-dek">These companies treat documentation as the primary brand touchpoint — often the first and only thing a developer reads before deciding to trust the product.</p>
+
+    <div class="cards">
+
+      <article class="card" id="twilio">
+        <div class="card-swatch" style="background:linear-gradient(135deg,#F22F46 0%,#0d0d0d 100%);">
+          <img src="https://cdn.simpleicons.org/twilio/ffffff" alt="Twilio logo" />
+          <span class="brandname">Twilio Docs</span>
+        </div>
+        <div class="card-body">
+          <h3>The original "docs as growth lever"</h3>
+          <p class="tagline">Docs, quickstarts, and support are unified under one open-source design system.</p>
+          <dl class="facts">
+            <dt>Structure</dt><dd>Product-family sections (Conversations, Communications, Authentication, Customer Data, Builder Tools) each with a plain-language one-liner before any API reference</dd>
+            <dt>Design system</dt><dd><strong>Paste</strong> — Twilio's own open-sourced UI system, used consistently across docs, console, and marketing</dd>
+            <dt>Philosophy</dt><dd>Docs are treated as a PLG (product-led growth) engine: the faster a developer succeeds, the faster organic adoption spreads</dd>
+            <dt>Voice</dt><dd>Plain-spoken, empathetic technical writing — assumes nothing, explains "why" before API shape</dd>
+          </dl>
+          <div class="swatch-row">
+            <div class="swatch" style="background:#F22F46"><span class="hex">#F22F46</span></div>
+            <div class="swatch" style="background:#0d0d0d"><span class="hex">#0D0D0D</span></div>
+            <div class="swatch" style="background:#ffffff;border:1px solid #333"><span class="hex">#FFFFFF</span></div>
+          </div>
+          <div class="takeaway"><strong>Takeaway:</strong> Twilio proves an open-sourced design system (Paste) can carry brand consistency across docs + product UI + marketing at once — worth evaluating whether any given portal's docs and marketing surfaces are visually unified or drifting apart.</div>
+          <div class="links">
+            <a href="https://www.twilio.com/docs" target="_blank" rel="noopener">twilio.com/docs</a>
+            <a href="https://github.com/twilio-labs/paste" target="_blank" rel="noopener">Paste design system</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" id="stripe-docs">
+        <div class="card-swatch" style="background:linear-gradient(135deg,#635BFF 0%,#0A2540 100%);">
+          <img src="https://cdn.simpleicons.org/stripe/ffffff" alt="Stripe logo" />
+          <span class="brandname">docs.stripe.com</span>
+        </div>
+        <div class="card-body">
+          <h3>Task-first, then taxonomy</h3>
+          <p class="tagline">"Accept payments online," not "Payments API reference."</p>
+          <dl class="facts">
+            <dt>Structure</dt><dd>Top row is task-oriented CTAs ("Accept payments online," "Sell subscriptions," "Build on Stripe with AI"), <em>then</em> a categorized "Browse by product" grid</dd>
+            <dt>AI framing</dt><dd>"Build on Stripe with AI" is a first-class top-level entry point, not an afterthought section</dd>
+            <dt>Social card</dt><dd>Dedicated OG image for the docs homepage, separate from the marketing site's</dd>
+            <dt>Craft</dt><dd>Long-running reputation for the clearest technical writing in fintech; docs are cited constantly as the industry benchmark</dd>
+          </dl>
+          <div class="swatch-row">
+            <div class="swatch" style="background:#635BFF"><span class="hex">#635BFF</span></div>
+            <div class="swatch" style="background:#0A2540"><span class="hex">#0A2540</span></div>
+          </div>
+          <div class="takeaway"><strong>Takeaway:</strong> Leading with jobs-to-be-done ("Accept payments online") ahead of a product/feature taxonomy is a pattern worth borrowing for top-of-page docs navigation generally.</div>
+          <div class="links">
+            <a href="https://docs.stripe.com/" target="_blank" rel="noopener">docs.stripe.com</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" id="supabase">
+        <div class="card-swatch" style="background:linear-gradient(135deg,#3ECF8E 0%,#1c1c1c 100%);">
+          <img src="https://cdn.simpleicons.org/supabase/ffffff" alt="Supabase logo" />
+          <span class="brandname">Supabase Docs</span>
+        </div>
+        <div class="card-body">
+          <h3>Docs feel like part of the product</h3>
+          <p class="tagline">Dark-mode-first, live Postgres examples, zero marketing detour.</p>
+          <dl class="facts">
+            <dt>Visual</dt><dd>Same dark theme, same green accent, same component library as the actual dashboard app — no jarring hand-off between "marketing site" and "docs"</dd>
+            <dt>Code UX</dt><dd>Runnable SQL/JS snippets with copy buttons and language toggles embedded directly in guides</dd>
+            <dt>Voice</dt><dd>Confident, slightly playful, very "we're an open-source alternative" in framing</dd>
+          </dl>
+          <div class="swatch-row">
+            <div class="swatch" style="background:#3ECF8E"><span class="hex">#3ECF8E</span></div>
+            <div class="swatch" style="background:#1c1c1c"><span class="hex">#1C1C1C</span></div>
+          </div>
+          <div class="takeaway"><strong>Takeaway:</strong> When the docs site and the product UI share literal components (not just a color palette), it reinforces "this is one product," not "marketing vs. reality." Worth auditing whether any docs site visually matches the actual product/tooling it describes.</div>
+          <div class="links">
+            <a href="https://supabase.com/docs" target="_blank" rel="noopener">supabase.com/docs</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" id="planetscale">
+        <div class="card-swatch" style="background:linear-gradient(135deg,#1a1a1a 0%,#f35815 130%);">
+          <img src="https://cdn.simpleicons.org/planetscale/ffffff" alt="PlanetScale logo" />
+          <span class="brandname">PlanetScale Docs</span>
+        </div>
+        <div class="card-body">
+          <h3>Editorial confidence, heavy diagramming</h3>
+          <p class="tagline">Database branching explained visually, not just in prose.</p>
+          <dl class="facts">
+            <dt>Typography</dt><dd>Generous type scale, restrained black/white palette with a single orange accent — reads like a well-typeset engineering blog</dd>
+            <dt>Diagrams</dt><dd>Custom SVG diagrams for concepts (branching, schema changes) rather than screenshots</dd>
+            <dt>Voice</dt><dd>Opinionated, confident — explains database best practices as much as the product itself</dd>
+          </dl>
+          <div class="swatch-row">
+            <div class="swatch" style="background:#1a1a1a"><span class="hex">#1A1A1A</span></div>
+            <div class="swatch" style="background:#f35815"><span class="hex">#F35815</span></div>
+            <div class="swatch" style="background:#fafafa;border:1px solid #333"><span class="hex">#FAFAFA</span></div>
+          </div>
+          <div class="takeaway"><strong>Takeaway:</strong> Custom diagrams (not screenshots) for core concepts age better and reinforce brand more than UI screenshots that go stale with every redesign — especially relevant for docs that explain system-level or architectural concepts.</div>
+          <div class="links">
+            <a href="https://planetscale.com/docs" target="_blank" rel="noopener">planetscale.com/docs</a>
+            <a href="https://planetscale.com/brand" target="_blank" rel="noopener">Brand assets</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" id="resend">
+        <div class="card-swatch" style="background:linear-gradient(135deg,#000000 0%,#3a3a3a 100%);">
+          <img src="https://cdn.simpleicons.org/resend/ffffff" alt="Resend logo" />
+          <span class="brandname">Resend Docs</span>
+        </div>
+        <div class="card-body">
+          <h3>Every page feels designed, not templated</h3>
+          <p class="tagline">Tiny team, outsized craft — proof that scale isn't a prerequisite for polish.</p>
+          <dl class="facts">
+            <dt>Visual</dt><dd>Strict black/white palette, generous whitespace, no stock imagery at all</dd>
+            <dt>Code UX</dt><dd>Framework-specific quickstarts (Next.js, Node, Python, Ruby, PHP) each treated as a first-class page, not a tab</dd>
+            <dt>Scale lesson</dt><dd>Small team output reads as more consistent than many enterprise docs sites — consistency comes from restraint, not headcount</dd>
+          </dl>
+          <div class="swatch-row">
+            <div class="swatch" style="background:#000000"><span class="hex">#000000</span></div>
+            <div class="swatch" style="background:#FDFDFD;border:1px solid #333"><span class="hex">#FDFDFD</span></div>
+          </div>
+          <div class="takeaway"><strong>Takeaway:</strong> A tightly-limited palette and layout system, applied with zero exceptions, reads as "more premium" than a wider palette applied loosely — an argument for strict brand governance over creative flexibility per page.</div>
+          <div class="links">
+            <a href="https://resend.com/docs" target="_blank" rel="noopener">resend.com/docs</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" id="linear">
+        <div class="card-swatch" style="background:linear-gradient(135deg,#5E6AD2 0%,#222326 100%);">
+          <img src="https://cdn.simpleicons.org/linear/ffffff" alt="Linear logo" />
+          <span class="brandname">Linear Docs &amp; Changelog</span>
+        </div>
+        <div class="card-body">
+          <h3>Docs, changelog, and brand as one voice</h3>
+          <p class="tagline">Famous for restraint — nothing ships without a considered "why."</p>
+          <dl class="facts">
+            <dt>Cohesion</dt><dd>Product docs, public changelog, and marketing site share identical type, motion, and iconography — no visual seam between them</dd>
+            <dt>Changelog</dt><dd>Treated as a flagship content surface (its own polished page), not a buried release-notes list</dd>
+            <dt>Voice</dt><dd>Terse, declarative, confident — short sentences, no filler adjectives</dd>
+          </dl>
+          <div class="swatch-row">
+            <div class="swatch" style="background:#5E6AD2"><span class="hex">#5E6AD2</span></div>
+            <div class="swatch" style="background:#222326"><span class="hex">#222326</span></div>
+            <div class="swatch" style="background:#F4F5F8;border:1px solid #333"><span class="hex">#F4F5F8</span></div>
+          </div>
+          <div class="takeaway"><strong>Takeaway:</strong> A polished, brand-consistent changelog is itself a devrel/marketing asset. Scattered "what's new" release-note pages across a portal are worth unifying into one flagship changelog experience.</div>
+          <div class="links">
+            <a href="https://linear.app/docs" target="_blank" rel="noopener">linear.app/docs</a>
+            <a href="https://linear.app/changelog" target="_blank" rel="noopener">linear.app/changelog</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section id="tools">
+  <div class="wrap">
+    <h2 class="section-heading">03 — Dev Tools &amp; Frameworks</h2>
+    <h2 class="group-heading">Docs That Double as the Product Demo</h2>
+    <p class="group-dek">For tools and frameworks, the documentation often <em>is</em> the primary way developers experience the brand before ever installing anything.</p>
+
+    <div class="cards">
+
+      <article class="card" id="tailwind">
+        <div class="card-swatch" style="background:linear-gradient(135deg,#38BDF8 0%,#0c4a6e 100%);">
+          <img src="https://cdn.simpleicons.org/tailwindcss/ffffff" alt="Tailwind CSS logo" />
+          <span class="brandname">Tailwind CSS Docs</span>
+        </div>
+        <div class="card-body">
+          <h3>The docs are the product demo</h3>
+          <p class="tagline">Live interactive examples everywhere; "why" explained before rules.</p>
+          <dl class="facts">
+            <dt>Structure</dt><dd>Every concept page opens with the mental model, then a labeled Do/Don't code pair, then progressively complex examples</dd>
+            <dt>Example page</dt><dd><a href="https://tailwindcss.com/docs/detecting-classes-in-source-files" target="_blank" rel="noopener">"Detecting classes in source files"</a> — explains the scanning mechanism, then shows exactly why dynamic class names fail before giving the fix</dd>
+            <dt>Voice</dt><dd>Plainly technical, quietly opinionated ("Instead, make sure...") — no hedging</dd>
+          </dl>
+          <div class="swatch-row">
+            <div class="swatch" style="background:#38BDF8"><span class="hex">#38BDF8</span></div>
+            <div class="swatch" style="background:#0c4a6e"><span class="hex">#0C4A6E</span></div>
+          </div>
+          <div class="takeaway"><strong>Takeaway:</strong> The "why first, then Do/Don't code pair" structure (see Documentation Craft Patterns below) is directly reusable for API/SDK reference pages generally, not just marketing pages.</div>
+          <div class="links">
+            <a href="https://tailwindcss.com/docs" target="_blank" rel="noopener">tailwindcss.com/docs</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" id="shadcn">
+        <div class="card-swatch" style="background:linear-gradient(135deg,#18181b 0%,#6366f1 140%);">
+          <img src="https://cdn.simpleicons.org/shadcnui/ffffff" alt="shadcn/ui logo" />
+          <span class="brandname">shadcn/ui Docs</span>
+        </div>
+        <div class="card-body">
+          <h3>Docs-as-component-gallery</h3>
+          <p class="tagline">The copy-paste UX became an industry template almost overnight.</p>
+          <dl class="facts">
+            <dt>Structure</dt><dd>Every component page is simultaneously a live preview, a copy-paste code block, and the reference doc — one artifact, three jobs</dd>
+            <dt>Brand restraint</dt><dd>Deliberately near-invisible brand (black/white, no logo flourish) so it reads as neutral infrastructure, not a vendor product</dd>
+            <dt>Influence</dt><dd>Countless component libraries and internal design systems now copy this exact "preview + code + copy button" layout</dd>
+          </dl>
+          <div class="swatch-row">
+            <div class="swatch" style="background:#18181b"><span class="hex">#18181B</span></div>
+            <div class="swatch" style="background:#6366f1"><span class="hex">#6366F1</span></div>
+          </div>
+          <div class="takeaway"><strong>Takeaway:</strong> A near-invisible brand can be a deliberate strategy: it lowers the "vendor lock-in" feeling for infrastructure-flavored tools. Worth deciding deliberately where a given docs site should feel neutral/infrastructural vs. where it should feel branded.</div>
+          <div class="links">
+            <a href="https://ui.shadcn.com/docs" target="_blank" rel="noopener">ui.shadcn.com/docs</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" id="deno">
+        <div class="card-swatch" style="background:linear-gradient(135deg,#000000 0%,#2b2b2b 100%);">
+          <img src="https://cdn.simpleicons.org/deno/ffffff" alt="Deno logo" />
+          <span class="brandname">Deno Docs</span>
+        </div>
+        <div class="card-body">
+          <h3>Clean, opinionated, playful technical writing</h3>
+          <p class="tagline">A runtime with a strong point of view, and docs that aren't afraid to say so.</p>
+          <dl class="facts">
+            <dt>Voice</dt><dd>Willing to editorialize about why Deno made a given choice vs. Node — docs double as a "why we're different" pitch</dd>
+            <dt>Visual</dt><dd>Monochrome dinosaur mark, minimal color, heavy reliance on terminal-style code blocks</dd>
+          </dl>
+          <div class="swatch-row">
+            <div class="swatch" style="background:#000000"><span class="hex">#000000</span></div>
+            <div class="swatch" style="background:#f9f871"><span class="hex">#F9F871</span></div>
+          </div>
+          <div class="takeaway"><strong>Takeaway:</strong> Docs can carry a point-of-view/rationale, not just instructions — useful anywhere a team needs to explain "why this API replaces that older one."</div>
+          <div class="links">
+            <a href="https://docs.deno.com/" target="_blank" rel="noopener">docs.deno.com</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" id="bun">
+        <div class="card-swatch" style="background:linear-gradient(135deg,#FBF0DF 0%,#FEBBD0 100%);">
+          <img src="https://cdn.simpleicons.org/bun/000000" alt="Bun logo" />
+          <span class="brandname">Bun Docs</span>
+        </div>
+        <div class="card-body">
+          <h3>Fast, confident, benchmark-driven tone</h3>
+          <p class="tagline">A distinctive cream/pastel palette that stands out against the sea of dark-mode dev docs.</p>
+          <dl class="facts">
+            <dt>Visual</dt><dd>Warm cream/peach/pink palette is a deliberate contrarian choice vs. the near-universal black-background dev-tool docs aesthetic</dd>
+            <dt>Voice</dt><dd>Performance-obsessed, benchmark numbers featured prominently and often, confident to the point of brash</dd>
+          </dl>
+          <div class="swatch-row">
+            <div class="swatch" style="background:#FBF0DF;border:1px solid #333"><span class="hex">#FBF0DF</span></div>
+            <div class="swatch" style="background:#FEBBD0"><span class="hex">#FEBBD0</span></div>
+            <div class="swatch" style="background:#FF6164"><span class="hex">#FF6164</span></div>
+          </div>
+          <div class="takeaway"><strong>Takeaway:</strong> A warm, non-black palette can be a genuine differentiator in a category where every competitor defaults to dark mode — worth treating palette as a deliberate choice, not a default.</div>
+          <div class="links">
+            <a href="https://bun.sh/docs" target="_blank" rel="noopener">bun.sh/docs</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" id="sentry">
+        <div class="card-swatch" style="background:linear-gradient(135deg,#362D59 0%,#fd44b0 140%);">
+          <img src="https://cdn.simpleicons.org/sentry/ffffff" alt="Sentry logo" />
+          <span class="brandname">Sentry Docs</span>
+        </div>
+        <div class="card-body">
+          <h3>Huge surface area, clear IA, dry humor</h3>
+          <p class="tagline">Dozens of SDKs/platforms handled without ever feeling like a maze.</p>
+          <dl class="facts">
+            <dt>Structure</dt><dd>Platform picker up front narrows the entire rest of the doc tree to just what's relevant — huge complexity hidden behind one early choice</dd>
+            <dt>Voice</dt><dd>Wry, self-aware copy (product literally about tracking errors) that keeps otherwise dry reference material engaging</dd>
+          </dl>
+          <div class="swatch-row">
+            <div class="swatch" style="background:#362D59"><span class="hex">#362D59</span></div>
+            <div class="swatch" style="background:#fd44b0"><span class="hex">#FD44B0</span></div>
+          </div>
+          <div class="takeaway"><strong>Takeaway:</strong> An early "pick your platform/language" gate can massively simplify a large docs surface — directly applicable anywhere a platform is fragmented across multiple frameworks or SDKs.</div>
+          <div class="links">
+            <a href="https://docs.sentry.io/" target="_blank" rel="noopener">docs.sentry.io</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" id="github-docs">
+        <div class="card-swatch" style="background:linear-gradient(135deg,#24292e 0%,#57606a 100%);">
+          <img src="https://cdn.simpleicons.org/github/ffffff" alt="GitHub logo" />
+          <span class="brandname">docs.github.com</span>
+        </div>
+        <div class="card-body">
+          <h3>Flat, exhaustive topic list — and it works</h3>
+          <p class="tagline">No cleverness in the IA; the strength is coverage and search.</p>
+          <dl class="facts">
+            <dt>Structure</dt><dd>A long, flat list of topics (Get started, Actions, Copilot, Codespaces, REST/GraphQL API, CLI, Discussions...) rather than a curated "featured path"</dd>
+            <dt>Agent-era addition</dt><dd>Recently added a machine-readable "Markdown version" link in the page head aimed explicitly at LLM agents scraping docs</dd>
+            <dt>Social card</dt><dd>Single consistent default social card across the whole docs site — brand consistency over per-page customization</dd>
+          </dl>
+          <div class="swatch-row">
+            <div class="swatch" style="background:#24292e"><span class="hex">#24292E</span></div>
+            <div class="swatch" style="background:#57606a"><span class="hex">#57606A</span></div>
+          </div>
+          <div class="takeaway"><strong>Takeaway:</strong> GitHub's newer "give agents a clean Markdown alternate link" pattern is worth adopting now, given how much documentation traffic is shifting to AI agents/assistants.</div>
+          <div class="links">
+            <a href="https://docs.github.com/" target="_blank" rel="noopener">docs.github.com</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section id="platforms">
+  <div class="wrap">
+    <h2 class="section-heading">04 — Platforms &amp; Ecosystems</h2>
+    <h2 class="group-heading">Community-First Developer Relations</h2>
+    <p class="group-dek">These portals lean hardest into voice, personality, and community — the parts of "developer brand" that are hardest to fake.</p>
+
+    <div class="cards">
+
+      <article class="card" id="vercel">
+        <div class="card-swatch" style="background:linear-gradient(135deg,#000000 0%,#333333 100%);">
+          <img src="https://cdn.simpleicons.org/vercel/ffffff" alt="Vercel logo" />
+          <span class="brandname">vercel.com/docs</span>
+        </div>
+        <div class="card-body">
+          <h3>Organized by what you're trying to build</h3>
+          <p class="tagline">"Build with AI" is the first section, not an appendix.</p>
+          <dl class="facts">
+            <dt>Structure</dt><dd>Sectioned by intent: Build with AI, Build your applications, Use Vercel's AI infrastructure, Secure your applications, Collaborate, Deploy and scale, Guides and tutorials</dd>
+            <dt>AI-native framing</dt><dd>Explicit docs for "Claim Deployments" (letting an AI agent deploy, then a human takes over) — docs are being rewritten around agentic workflows</dd>
+          </dl>
+          <div class="swatch-row">
+            <div class="swatch" style="background:#000000"><span class="hex">#000000</span></div>
+            <div class="swatch" style="background:#ffffff;border:1px solid #333"><span class="hex">#FFFFFF</span></div>
+          </div>
+          <div class="takeaway"><strong>Takeaway:</strong> Vercel is restructuring its entire docs IA around AI-agent-assisted development, not just adding an "AI" tag to existing pages — a signal for how quickly documentation categories are shifting.</div>
+          <div class="links">
+            <a href="https://vercel.com/docs" target="_blank" rel="noopener">vercel.com/docs</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" id="cloudflare">
+        <div class="card-swatch" style="background:linear-gradient(135deg,#F38020 0%,#0d0d0d 100%);">
+          <img src="https://cdn.simpleicons.org/cloudflare/ffffff" alt="Cloudflare logo" />
+          <span class="brandname">developers.cloudflare.com</span>
+        </div>
+        <div class="card-body">
+          <h3>"Powerful primitives, seamlessly integrated"</h3>
+          <p class="tagline">Category tabs, live terminal snippets, and a live changelog feed on the homepage.</p>
+          <dl class="facts">
+            <dt>Structure</dt><dd>Hero organized by category tabs (Compute / AI / Storage &amp; Databases / Media), each with a terminal-style snippet and CTA</dd>
+            <dt>Agent tooling</dt><dd>Distinctive "Build with your favorite AI agent" section — Claude, Codex, Cursor, opencode icons with one-click "Copy prompt" actions</dd>
+            <dt>Changelog</dt><dd>A live-updating "What's new" feed embedded directly on the docs homepage — freshness is visible immediately, not buried in a release-notes archive</dd>
+          </dl>
+          <div class="swatch-row">
+            <div class="swatch" style="background:#F38020"><span class="hex">#F38020</span></div>
+            <div class="swatch" style="background:#0d0d0d"><span class="hex">#0D0D0D</span></div>
+          </div>
+          <div class="takeaway"><strong>Takeaway:</strong> Surfacing a live changelog feed directly on the docs homepage — plus explicit "Copy prompt for [agent]" actions — are two very current, very copyable patterns for any docs portal.</div>
+          <div class="links">
+            <a href="https://developers.cloudflare.com/" target="_blank" rel="noopener">developers.cloudflare.com</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" id="shopify">
+        <div class="card-swatch" style="background:linear-gradient(135deg,#95BF47 0%,#1a1a1a 100%);">
+          <img src="https://cdn.simpleicons.org/shopify/ffffff" alt="Shopify logo" />
+          <span class="brandname">Shopify.dev</span>
+        </div>
+        <div class="card-body">
+          <h3>Underrated — strong narrative arcs</h3>
+          <p class="tagline">"Build an app" reads like a guided story, not a reference dump.</p>
+          <dl class="facts">
+            <dt>Structure</dt><dd>Long-form "build an app end to end" tutorials that walk through a complete real scenario, linking out to reference docs as needed rather than leading with reference</dd>
+            <dt>Ecosystem framing</dt><dd>Heavy emphasis on the partner/app-store ecosystem — docs double as a pitch for why to build a business on the platform, not just how to call an API</dd>
+          </dl>
+          <div class="swatch-row">
+            <div class="swatch" style="background:#95BF47"><span class="hex">#95BF47</span></div>
+            <div class="swatch" style="background:#1a1a1a"><span class="hex">#1A1A1A</span></div>
+          </div>
+          <div class="takeaway"><strong>Takeaway:</strong> A narrative, "build this whole thing" tutorial arc — not just isolated how-tos — is a strong pattern for onboarding new developers into a full end-to-end app scenario.</div>
+          <div class="links">
+            <a href="https://shopify.dev/" target="_blank" rel="noopener">shopify.dev</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" id="figma-dev">
+        <div class="card-swatch" style="background:linear-gradient(135deg,#F24E1E 0%,#A259FF 40%,#1ABCFE 70%,#0ACF83 100%);">
+          <img src="https://cdn.simpleicons.org/figma/ffffff" alt="Figma logo" />
+          <span class="brandname">Figma Developers</span>
+        </div>
+        <div class="card-body">
+          <h3>Playful illustration paired with hard reference</h3>
+          <p class="tagline">Plugin/widget/REST API docs softened with a consistent illustration system.</p>
+          <dl class="facts">
+            <dt>Visual</dt><dd>Custom illustrated mascots/icons recur across plugin docs, widget docs, and API reference, keeping otherwise dry material feeling like "Figma"</dd>
+            <dt>Community</dt><dd>Community plugin/widget directory is tightly integrated with the dev docs, not a separate marketplace site</dd>
+          </dl>
+          <div class="swatch-row">
+            <div class="swatch" style="background:#F24E1E"><span class="hex">#F24E1E</span></div>
+            <div class="swatch" style="background:#A259FF"><span class="hex">#A259FF</span></div>
+            <div class="swatch" style="background:#1ABCFE"><span class="hex">#1ABCFE</span></div>
+            <div class="swatch" style="background:#0ACF83"><span class="hex">#0ACF83</span></div>
+          </div>
+          <div class="takeaway"><strong>Takeaway:</strong> A consistent illustration system (not stock photography) can carry personality through purely technical reference material — a strong argument for a dedicated icon/illustration system vs. rotating campaign photography.</div>
+          <div class="links">
+            <a href="https://www.figma.com/developers" target="_blank" rel="noopener">figma.com/developers</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" id="notion">
+        <div class="card-swatch" style="background:linear-gradient(135deg,#000000 0%,#37352f 100%);">
+          <img src="https://cdn.simpleicons.org/notion/ffffff" alt="Notion logo" />
+          <span class="brandname">Notion API Docs</span>
+        </div>
+        <div class="card-body">
+          <h3>Approachable tone, a standout "recipes" section</h3>
+          <p class="tagline">Task-based recipes sit alongside strict reference, aimed at less-experienced integrators.</p>
+          <dl class="facts">
+            <dt>Structure</dt><dd>"Guides" and "Recipes" sections translate the reference API into copy-pasteable real-world scenarios (e.g., "build a Slack bot with the Notion API")</dd>
+            <dt>Voice</dt><dd>Friendly, unintimidating — written for builders who may not be professional backend engineers</dd>
+          </dl>
+          <div class="swatch-row">
+            <div class="swatch" style="background:#000000"><span class="hex">#000000</span></div>
+            <div class="swatch" style="background:#37352f"><span class="hex">#37352F</span></div>
+          </div>
+          <div class="takeaway"><strong>Takeaway:</strong> A dedicated "Recipes" layer between conceptual guides and hard reference lowers the bar for hobbyist/indie developers — relevant anywhere the audience includes students and indie devs, not just enterprise integrators.</div>
+          <div class="links">
+            <a href="https://developers.notion.com/" target="_blank" rel="noopener">developers.notion.com</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" id="discord">
+        <div class="card-swatch" style="background:linear-gradient(135deg,#5865F2 0%,#23272A 100%);">
+          <img src="https://cdn.simpleicons.org/discord/ffffff" alt="Discord logo" />
+          <span class="brandname">Discord Developers</span>
+        </div>
+        <div class="card-body">
+          <h3>Community-first, brand voice even in reference docs</h3>
+          <p class="tagline">Devrel-heavy — emoji, humor, and personality survive into the API reference itself.</p>
+          <dl class="facts">
+            <dt>Voice</dt><dd>Playful, first-person, unafraid of emoji/humor even in formal endpoint documentation — a rare choice at this scale</dd>
+            <dt>Community</dt><dd>Its own developer Discord server is treated as core infrastructure for support, not a bolt-on community channel</dd>
+          </dl>
+          <div class="swatch-row">
+            <div class="swatch" style="background:#5865F2"><span class="hex">#5865F2</span></div>
+            <div class="swatch" style="background:#23272A"><span class="hex">#23272A</span></div>
+          </div>
+          <div class="takeaway"><strong>Takeaway:</strong> Discord shows that brand voice/personality doesn't have to disappear once you hit formal reference material — a useful counterpoint for docs that currently go fully neutral/corporate at the reference layer.</div>
+          <div class="links">
+            <a href="https://discord.com/developers/docs/intro" target="_blank" rel="noopener">discord.com/developers/docs</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section id="craft">
+  <div class="wrap">
+    <h2 class="section-heading">05 — Cross-Cutting Patterns</h2>
+    <h2 class="group-heading">Documentation Craft Patterns</h2>
+    <p class="group-dek">Beyond visual brand (colors/logos), these are the recurring <em>writing and structure</em> patterns that make documentation feel like a considered brand experience rather than a generated reference dump.</p>
+
+    <div class="craft-grid">
+
+      <div class="craft-card">
+        <h3>1. "Why" before "how"</h3>
+        <p>Tailwind, Stripe, and Deno all open a concept page with the underlying mental model before any rule or API signature — so a reader understands <em>why</em> a constraint exists instead of just memorizing it.</p>
+      </div>
+
+      <div class="craft-card">
+        <h3>2. Labeled Do/Don't code pairs</h3>
+        <p>A visually distinct "wrong way" and "right way" code block, side by side, is one of the fastest ways to communicate a rule without paragraphs of prose. Example from Tailwind's docs:</p>
+        <div class="code-pair">
+          <div>
+            <div class="code-label dont">✕ Don't</div>
+            <div class="code-block dont">&lt;div class="text-{{ error ? 'red' : 'green' }}-600"&gt;&lt;/div&gt;</div>
+          </div>
+          <div>
+            <div class="code-label do">✓ Do</div>
+            <div class="code-block do">&lt;div class="{{ error ? 'text-red-600' : 'text-green-600' }}"&gt;&lt;/div&gt;</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="craft-card">
+        <h3>3. Task-first navigation, taxonomy second</h3>
+        <p>Stripe and Vercel both lead their docs homepage with "what are you trying to do" CTAs (Accept payments online, Build with AI) before a browsable product/feature taxonomy — jobs-to-be-done before information architecture.</p>
+      </div>
+
+      <div class="craft-card">
+        <h3>4. An early "narrow the world" gate</h3>
+        <p>Sentry's platform picker and Google for Developers' language-tab widget both let a huge, fragmented docs surface collapse to "just what's relevant to me" in a single early click — directly applicable anywhere a platform spans multiple frameworks or SDKs.</p>
+      </div>
+
+      <div class="craft-card">
+        <h3>5. Changelog as a flagship surface, not an archive</h3>
+        <p>Linear's changelog and Cloudflare's homepage "What's new" feed are both treated as first-class, well-designed content — not a plain-text release-notes page bolted onto the bottom of a nav.</p>
+      </div>
+
+      <div class="craft-card">
+        <h3>6. Docs written for AI agents, too</h3>
+        <p>GitHub Docs now ships a machine-readable Markdown alternate link in the page head; Cloudflare ships one-click "Copy prompt for [agent]" actions. Documentation is increasingly a dual-audience surface: humans <em>and</em> coding agents.</p>
+      </div>
+
+      <div class="craft-card">
+        <h3>7. Brand voice survives into reference material</h3>
+        <p>Discord and Deno both let personality/opinion persist even in strict API reference sections, rather than dropping all voice once past the marketing-flavored landing page.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer id="sources">
+  <div class="wrap">
+    <h2>Sources</h2>
+    <ul>
+      <li><a href="https://developer.apple.com/" target="_blank" rel="noopener">developer.apple.com</a></li>
+      <li><a href="https://developer.apple.com/wwdc26/" target="_blank" rel="noopener">developer.apple.com/wwdc26</a></li>
+      <li><a href="https://developers.google.com/" target="_blank" rel="noopener">developers.google.com</a></li>
+      <li><a href="https://developers.googleblog.com/" target="_blank" rel="noopener">developers.googleblog.com</a></li>
+      <li><a href="https://www.twilio.com/docs" target="_blank" rel="noopener">twilio.com/docs</a></li>
+      <li><a href="https://github.com/twilio-labs/paste" target="_blank" rel="noopener">github.com/twilio-labs/paste</a></li>
+      <li><a href="https://docs.stripe.com/" target="_blank" rel="noopener">docs.stripe.com</a></li>
+      <li><a href="https://supabase.com/docs" target="_blank" rel="noopener">supabase.com/docs</a></li>
+      <li><a href="https://planetscale.com/docs" target="_blank" rel="noopener">planetscale.com/docs</a></li>
+      <li><a href="https://resend.com/docs" target="_blank" rel="noopener">resend.com/docs</a></li>
+      <li><a href="https://linear.app/docs" target="_blank" rel="noopener">linear.app/docs</a></li>
+      <li><a href="https://linear.app/changelog" target="_blank" rel="noopener">linear.app/changelog</a></li>
+      <li><a href="https://tailwindcss.com/docs" target="_blank" rel="noopener">tailwindcss.com/docs</a></li>
+      <li><a href="https://ui.shadcn.com/docs" target="_blank" rel="noopener">ui.shadcn.com/docs</a></li>
+      <li><a href="https://docs.deno.com/" target="_blank" rel="noopener">docs.deno.com</a></li>
+      <li><a href="https://bun.sh/docs" target="_blank" rel="noopener">bun.sh/docs</a></li>
+      <li><a href="https://docs.sentry.io/" target="_blank" rel="noopener">docs.sentry.io</a></li>
+      <li><a href="https://docs.github.com/" target="_blank" rel="noopener">docs.github.com</a></li>
+      <li><a href="https://vercel.com/docs" target="_blank" rel="noopener">vercel.com/docs</a></li>
+      <li><a href="https://developers.cloudflare.com/" target="_blank" rel="noopener">developers.cloudflare.com</a></li>
+      <li><a href="https://shopify.dev/" target="_blank" rel="noopener">shopify.dev</a></li>
+      <li><a href="https://www.figma.com/developers" target="_blank" rel="noopener">figma.com/developers</a></li>
+      <li><a href="https://developers.notion.com/" target="_blank" rel="noopener">developers.notion.com</a></li>
+      <li><a href="https://discord.com/developers/docs/intro" target="_blank" rel="noopener">discord.com/developers/docs</a></li>
+    </ul>
+    <a class="back-to-top" href="#top">&uarr; Back to top</a>
+  </div>
+</footer>
+
+</body>
+</html>
